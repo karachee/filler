@@ -27,12 +27,21 @@
 
 #filler-config-add-button{
     margin: 10px 0;
+    height: 30px;
 }
 
 .filler-config-model-title{
     color: white;
     font-size: x-large;
     padding: 10px;
+}
+
+.filler-config-model-desc{
+    font-size: smaller;
+    font-style: italic;
+    color: #ffffff66;
+    margin-left: 10px;
+    margin-bottom: 5px;
 }
 
 #filler-config-model-definition-container{

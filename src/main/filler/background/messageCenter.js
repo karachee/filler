@@ -5,12 +5,16 @@ function hanldeMessage(message, sender, sendResponse, apiMessage){
         switch (message.messageName) {
             case "setModel":
                 setModel(message.model);
+                if(apiMessage){
+                    broadcastMessageToConnectedApiPorts({messageName: message.messageName+'Ack'});
+                }
+                break;
+            case "extensionInfo":
+                if(apiMessage){
+                    broadcastMessageToConnectedApiPorts({messageName: message.messageName, message:{extensionVersion: chrome.runtime.getManifest().version}});
+                }
                 break;
             default:
-        }
-
-        if(apiMessage){
-            broadcastMessageToConnectedApiPorts({messageName: message.messageName+'Ack'});
         }
     }
 }

@@ -3,7 +3,6 @@ let model = {
     'Patient Last Name': 'Loucks'
 };
 
-
 function setModel(incomingModel){
     model = incomingModel;
     resetContextMenus();

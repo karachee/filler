@@ -17,7 +17,7 @@ Ideally there would be an automated process to load the models bases on a the en
             "testKey":"testValue"
         }
         </textarea>
-        <button id="send-button">Send</button>
+        <button id="send-button" disabled>Send</button><span id="extension-info" style="margin-left:10px;color:red;">Extension not installed</span>
         <div>
             <h3>Test Here:</h3>
             <p>Right click in the input field, hover over 'Filer' in the context menu, then 'Fill'</p>
@@ -31,9 +31,22 @@ Ideally there would be an automated process to load the models bases on a the en
 
         document.addEventListener("fillerExtensionMessage", (message)=>{
             if (message && message.target && message.detail) {
+                
+                if('extensionInfo' === message.detail.messageName){
+                    let element = document.getElementById('extension-info');
+                    element.textContent = `Extension version ${message.detail.message.extensionVersion} installed`; 
+                    element.style.color = 'green';
+
+                    document.getElementById('send-button').removeAttribute('disabled');
+                }
+                
                 console.log(message.detail);
             }
         }, false);
+
+        (()=>{
+            window.postMessage({type: 'apiMessage', message: {messageName:'extensionInfo'}}, "*");
+        })();
     </script>
 </html>
 ```

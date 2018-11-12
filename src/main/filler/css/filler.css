@@ -1,0 +1,33 @@
+body{
+    margin: 0;
+}
+
+.button{
+    color: white;
+    margin: 10px 0;
+    font-family: inherit;
+    font-size: 100%;
+    padding: .5em 1em;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    font-size: small;
+    background: #0078e7;
+}
+
+.button-secondary{
+    background: rgb(58, 58, 62) !important;
+}
+
+.button-error {
+    background: rgb(202, 60, 60) !important;
+}
+
+.button-warning {
+    background: rgb(223, 117, 20) !important;
+}
+
+.horizontal-line{
+    width:100%;
+    border: 1px solid white;
+}

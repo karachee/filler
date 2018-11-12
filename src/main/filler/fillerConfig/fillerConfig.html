@@ -1,0 +1,34 @@
+<html>
+<head>
+    <link rel="stylesheet" href="fillerConfig.css">
+    <link rel="stylesheet" href="../css/filler.css">
+</head>
+<body>
+<div id='filler-config'>
+
+    <div id='filler-config-content'>
+        <div id='filler-config-model-container'>
+
+            <div id='filler-config-model-container-header'>
+                <span class="filler-config-model-title">Model</span>
+                <div style="display: flex;justify-content: space-evenly;width: 20%;">
+                    <button id='filler-config-add-button' class='button'>+</button>
+                    <input type="file" name="file" id="choose-file" class="input-file" />
+                    <label class="button" for="choose-file">File</label>
+                </div>
+            </div>
+
+            <div class="horizontal-line"></div>
+            <div id="filler-config-model-definition-container"></div>
+        </div>
+
+        <div id='filler-config-footer'>
+            <button id='filler-config-cancel-button' class='button button-secondary'>Cancel</button>
+            <button id='filler-config-done-button' class='button'>Set</button>
+        </div>
+    </div>
+</div>
+</body>
+<script src="../utils/utils.js"></script>
+<script src="fillerConfig.js"></script>
+</html>

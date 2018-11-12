@@ -1,0 +1,43 @@
+{
+  "name": "Filler",
+  "version": "1.0.0",
+  "author": "Karachee",
+  "manifest_version": 2,
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "description": "Filler",
+  "browser_action": {
+    "default_icon": "icons/fill.png"
+  },
+  "icons": {
+    "128": "icons/fill.png"
+  },
+  "content_scripts": [
+    {
+      "matches" : [
+        "<all_urls>"
+      ],
+      "js": [
+        "contentScripts/contextMenuHandler.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentScripts/apiAccess.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "scripts": [
+      "background/background.js",
+      "background/messageCenter.js",
+      "background/contextMenus.js"
+    ]
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "<all_urls>",
+    "contextMenus"
+  ]
+}

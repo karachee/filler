@@ -33,3 +33,19 @@ function addDoubleClickEventListenersByClassName(className, clickHandler){
         }
     }
 }
+
+
+/**
+ * Use:
+ * async function something(){
+ *      for(const x in something){
+ *          await wait(1000);
+ *          //...do something
+ *      }
+ * }
+ * @param waitTime
+ * @returns {Promise<any>}
+ */
+function wait(waitTime){
+    return new Promise(resolve => setTimeout(resolve, waitTime));
+}

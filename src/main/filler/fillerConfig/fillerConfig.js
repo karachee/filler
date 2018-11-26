@@ -4,7 +4,7 @@ let editing = false;
 function buildModelDefinition(withAnimation) {
     editing = false;
 
-    if (model) {
+    if (model!=null) {
         let modelDefinition = document.getElementById('model-definition');
         if (modelDefinition) {
             modelDefinition.innerHTML = '';
@@ -16,12 +16,12 @@ function buildModelDefinition(withAnimation) {
                     "<div class='model-definition-item' data-key='"+entry[0]+"'>"+
                     "<div class='model-definition-item-key'>"+entry[0].splitCamelCase().capitalizeFirstLetter()+"</div>"+
                     "<div class='model-definition-item-value'>"+entry[1]+"</div>"+
-                    "<div style='width:30%'></div>"+
+                    "<div class='model-definition-item-actions'><i class='fas fa-wrench' style='margin-right:10px;cursor: pointer;'></i></div>"+
                     "</div>"+
                     "<div class='horizontal-line model-definition-item-splitter'></div>"+
                     "</div>";
             });
-
+            addClickEventListenersByClassName('fa-wrench', editModelItem);
             addDoubleClickEventListenersByClassName('model-definition-item', editModelItem);
         }
     }
@@ -31,25 +31,28 @@ function editModelItem(event) {
     if (!editing) {
         let element = (event && event.target) ? event.target : null;
         if (element && element.parentElement && model) {
-            let key = element.parentElement.getAttribute("data-key");
-            let value = (key) ? model[key] : null;
+            let modelElement = (element.parentElement.getAttribute("data-key")) ? element.parentElement : null;
+            modelElement = (!modelElement && element.parentElement.parentElement && element.parentElement.parentElement.getAttribute("data-key")) ? element.parentElement.parentElement : modelElement;
+            if (modelElement) {
+                let key = modelElement.getAttribute("data-key");
+                let value = (key) ? model[key] : null;
 
-            if (key && value) {
-                editing = true;
+                if (key && value) {
+                    editing = true;
 
-                element.parentElement.innerHTML = "<input class='model-definition-item-key model-definition-item-edit' value='" + key.splitCamelCase().capitalizeFirstLetter() + "'</input>" +
-                    "<input class='model-definition-item-value model-definition-item-edit' value='" + value + "'</input>" +
-                    "<div class='model-definition-item-edit model-definition-item-edit-buttons'>" +
-                    "<button id='model-definition-item-edit-delete' class='button button-error edit-button' style='margin-right: 5px;'>Delete</button>" +
+                    modelElement.innerHTML = "<input id='model-definition-item-edit-value' class='model-definition-item-key model-definition-item-edit' value='" + key.splitCamelCase().capitalizeFirstLetter() + "'</input>" +
+                        "<input class='model-definition-item-value model-definition-item-edit' value='" + value + "'</input>" +
+                        "<div class='model-definition-item-edit model-definition-item-edit-buttons'>" +
+                        "<button id='model-definition-item-edit-delete' class='button button-error edit-button' style='margin-right: 5px;'>Delete</button>" +
+                        "<button id='model-definition-item-edit-cancel' class='button button-warning edit-button' style='margin-right: 5px;'>Cancel</button>"+
+                        "<button id='model-definition-item-edit-done' class='button button-success edit-button' style='margin-right: 5px;'>Done</button>" +
+                        "</div>";
 
-                    (('New Key' !== key) ? "<button id='model-definition-item-edit-cancel' class='button button-warning edit-button' style='margin-right: 5px;'>Cancel</button>"  : "")+
-
-                    "<button id='model-definition-item-edit-done' class='button button-success edit-button' style='margin-right: 5px;'>Done</button>" +
-                    "</div>";
-
-                addClickEventListenersById('model-definition-item-edit-delete', handleEditDeleteButton);
-                addClickEventListenersById('model-definition-item-edit-cancel', buildModelDefinition);
-                addClickEventListenersById('model-definition-item-edit-done', handleEditDoneButton);
+                    addClickEventListenersById('model-definition-item-edit-delete', handleEditDeleteButton);
+                    addClickEventListenersById('model-definition-item-edit-cancel', buildModelDefinition);
+                    addClickEventListenersById('model-definition-item-edit-done', handleEditDoneButton);
+                    addFocusAndSelectById('model-definition-item-edit-value');
+                }
             }
         }
     }
@@ -134,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 chrome.runtime.onMessage.addListener(function (message) {
     if (message && 'showFillerConfig' === message.messageName) {
-        model = message.model;
+        model = (message.model!=null) ? message.model : {};
         buildModelDefinition(true);
     }
 });

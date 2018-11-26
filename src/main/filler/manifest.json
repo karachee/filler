@@ -32,12 +32,14 @@
       "background/background.js",
       "background/messageCenter.js",
       "background/contextMenus.js"
-    ]
+    ],
+    "persistent": true
   },
   "permissions": [
     "tabs",
     "activeTab",
     "<all_urls>",
-    "contextMenus"
+    "contextMenus",
+    "storage"
   ]
 }

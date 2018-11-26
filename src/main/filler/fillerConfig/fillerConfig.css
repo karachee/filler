@@ -73,14 +73,17 @@
     flex-direction: column;
 }
 
-.model-definition-item-container{
+.model-definition-item-container {
+}
 
+.model-definition-item-container:hover .model-definition-item-splitter{
+    border-color: #0078e7 !important;
 }
 
 .model-definition-item{
     display: flex;
     justify-content: space-between;
-    margin: 10px;
+    margin: 15px 10px;
 }
 
 .model-definition-item-splitter{
@@ -102,6 +105,12 @@
 .model-definition-item-value{
     width:30%;
     word-break: break-all;
+}
+
+.model-definition-item-actions{
+    width: 30%;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .model-definition-item-edit{

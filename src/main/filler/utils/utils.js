@@ -19,6 +19,21 @@ function addClickEventListenersById(id, clickHandler){
     }
 }
 
+function addClickEventListenersByClassName(className, clickHandler){
+    let items = document.getElementsByClassName(className);
+    if (items) {
+        for (let itemIndex in items) {
+            if (items.hasOwnProperty(itemIndex)) {
+                let item = items[itemIndex];
+                if (item.addEventListener) {
+                    item.removeEventListener("click", clickHandler);
+                    item.addEventListener("click", clickHandler);
+                }
+            }
+        }
+    }
+}
+
 function addDoubleClickEventListenersByClassName(className, clickHandler){
     let items = document.getElementsByClassName(className);
     if (items) {
@@ -34,6 +49,13 @@ function addDoubleClickEventListenersByClassName(className, clickHandler){
     }
 }
 
+function addFocusAndSelectById(id){
+    let element = document.getElementById(id);
+    if (element) {
+        element.focus();
+        element.select();
+    }
+}
 
 /**
  * Use:

@@ -1,10 +1,10 @@
 let apiPorts = {};
 
-function hanldeMessage(message, sender, sendResponse, apiMessage){
+function handleMessage(message, sender, sendResponse, apiMessage){
     if(message!=null && message.messageName!=null){
         switch (message.messageName) {
             case "setModel":
-                setModel(message.model);
+                setModelAndResetContextMenus(message.model);
                 if(apiMessage){
                     broadcastMessageToConnectedApiPorts({messageName: message.messageName+'Ack'});
                 }
@@ -32,14 +32,14 @@ function broadcastMessageToConnectedApiPorts(message){
     }
 }
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) =>(hanldeMessage(message, sender, sendResponse)));
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) =>(handleMessage(message, sender, sendResponse)));
 
-chrome.runtime.onConnect.addListener(function(port) {
+chrome.runtime.onConnect.addListener((port)=> {
     if (port && 'fillerApiAccess' === port.name && port.sender && port.sender.tab && apiPorts) {
         if(apiPorts[port.sender.tab.id]!=null){
             delete apiPorts[port.sender.tab.id];
         }
         apiPorts[port.sender.tab.id] = port;
-        port.onMessage.addListener((message, sender, sendResponse) => hanldeMessage(message, sender, sendResponse, true));
+        port.onMessage.addListener((message, sender, sendResponse) => handleMessage(message, sender, sendResponse, true));
     }
 });
